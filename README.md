@@ -71,7 +71,7 @@ TravelFactory-/
 │       ├── entities/       # TypeORM models (User, VacationRequest)
 │       ├── controllers/    # Business logic
 │       ├── routes/         # Express routers
-│       ├── middleware/     # CORS, validation (Joi), error handler
+│       ├── middleware/     # CORS, validation (Zod), error handler
 │       └── database/       # DataSource + seed script
 ├── frontend/
 │   └── src/
@@ -97,13 +97,13 @@ TravelFactory-/
 
 **MVC backend** — controllers hold all business logic, routes are thin wiring layers, entities are pure TypeORM models. This keeps each layer independently testable.
 
-**Three middleware only** — CORS (cross-origin for dev), Joi schema validation (rejects bad input before it reaches controllers), and a centralized error handler (single place for all error responses). No over-engineering.
+**Three middleware only** — CORS (cross-origin for dev), Zod schema validation (rejects bad input before it reaches controllers), and a centralized error handler (single place for all error responses). No over-engineering.
 
 **No authentication** — role switching is done via a dropdown seeded with real users. This keeps setup to one command and scope within the 4-hour estimate.
 
 **TypeORM `synchronize: true`** — schema is auto-synced from entities in dev. In production this would be disabled in favour of migrations.
 
-**Joi for validation** — colocates validation schemas with the routes that use them, making the constraints immediately readable.
+**Zod for validation** — colocates validation schemas with the routes that use them, making the constraints immediately readable.
 
 ## Known Limitations
 
