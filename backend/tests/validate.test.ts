@@ -45,6 +45,12 @@ describe("validate middleware — createRequestSchema", () => {
     );
     expect(res.status).toHaveBeenCalledWith(400);
   });
+
+  it("rejects an invalid UUID", () => {
+    const res = mockRes();
+    mw(mockReq({ user_id: "not-a-uuid", start_date: "2026-06-01", end_date: "2026-06-05" }), res, next);
+    expect(res.status).toHaveBeenCalledWith(400);
+  });
 });
 
 describe("validate middleware — updateStatusSchema", () => {
@@ -63,6 +69,12 @@ describe("validate middleware — updateStatusSchema", () => {
   it("rejects Rejected without a comment", () => {
     const res = mockRes();
     mw(mockReq({ status: "Rejected" }), res, next);
+    expect(res.status).toHaveBeenCalledWith(400);
+  });
+
+  it("rejects Rejected with an empty comment", () => {
+    const res = mockRes();
+    mw(mockReq({ status: "Rejected", comments: "   " }), res, next);
     expect(res.status).toHaveBeenCalledWith(400);
   });
 
